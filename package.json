@@ -1,0 +1,24 @@
+{
+  "name": "node-red-contrib-gsp",
+  "version": "1.0.0",
+  "description": "Node red package for GSP",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha \"test/**/*_spec.js\""
+  },
+  "author": "OndrejCo",
+  "license": "ISC",
+  "node-red": {
+    "nodes": {
+      "gsp-get": "gsp-get.js"
+    }
+  },
+  "dependencies": {
+    "gspwsclient": "git+https://github.com/ondraco/gspwsclient.git"
+  },
+  "devDependencies": {
+    "mocha": "^8.2.1",
+    "node-red": "^1.2.7",
+    "node-red-node-test-helper": "^0.2.5"
+  }
+}
