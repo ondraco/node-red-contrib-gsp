@@ -17,6 +17,7 @@ module.exports = function (RED) {
     this.connected = false;
     this.gws.addEventListener("ready", onReady);
     this.gws.addEventListener("close", onClose);
+    this.gws.addEventListener("error", onError);
     connect();
 
     this.on("close", function () {
@@ -29,6 +30,10 @@ module.exports = function (RED) {
     }
 
     function onReady(e) {
+      node.connected = true;
+    }
+
+    function onError(e) {
       node.connected = true;
     }
 

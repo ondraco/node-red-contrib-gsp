@@ -9,17 +9,13 @@ module.exports = function (RED) {
     this.server = RED.nodes.getNode(config.server);
 
     let gws = this.server.gws;
-    gws.addEventListener("tagValue", onNewValue);
     gws.addEventListener("ready", onReady);
-    gws.addEventListener("error", onError);
     gws.addEventListener("close", onClose);
 
     var pendingMsg;
 
     this.on("close", function () {
-      gws.removeEventListener("tagValue", onNewValue);
       gws.removeEventListener("ready", onReady);
-      gws.removeEventListener("error", onError);
       gws.removeEventListener("close", onClose);
     });
 
@@ -33,11 +29,6 @@ module.exports = function (RED) {
       gws.queryTagValues(id);
     });
 
-    function onNewValue(e) {
-      pendingMsg.payload = e;
-      node.send(pendingMsg);
-    }
-
     function onReady(e) {
       node.status({ fill: "green", shape: "ring", text: "connected" });
     }
@@ -45,9 +36,7 @@ module.exports = function (RED) {
     function onClose(e) {
       node.status({ fill: "red", shape: "ring", text: "disconnected - error" });
     }
-
-    function onError(e) {}
   }
 
-  RED.nodes.registerType("gsp-get", GspGet);
+  RED.nodes.registerType("gsp-tag-get", GspGet);
 };

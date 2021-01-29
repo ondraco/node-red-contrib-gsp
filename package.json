@@ -10,7 +10,8 @@
   "license": "ISC",
   "node-red": {
     "nodes": {
-      "gsp-get": "gsp-get.js",
+      "gsp-tag-in": "gsp-tag-in.js",
+      "gsp-tag-get": "gsp-tag-get.js",
       "gsp-server": "gsp-server.js"
     }
   },

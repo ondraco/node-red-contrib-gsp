@@ -1,22 +1,22 @@
 <script type="text/javascript">
-  RED.nodes.registerType("gsp-get", {
-    category: "function",
+  RED.nodes.registerType("gsp-tag-in", {
+    category: "network",
     color: "#a6bbcf",
     defaults: {
       server: { value: "", required: true, type: "gsp-remote-server" },
-      tagId: { value: "" },
+      tagFilter: { value: "" },
       name: { value: "" },
     },
-    inputs: 1,
+    inputs: 0,
     outputs: 1,
     icon: "file.png",
     label: function () {
-      return this.name || "gsp-get";
+      return this.name || "gsp-tag-in";
     },
   });
 </script>
 
-<script type="text/html" data-template-name="gsp-get">
+<script type="text/html" data-template-name="gsp-tag-in">
   <div class="form-row">
     <label for="node-input-server"><i class="fa fa-tag"></i> GSP Server</label>
     <input type="text" id="node-input-server" placeholder="Name" />
@@ -26,11 +26,11 @@
     <input type="text" id="node-input-name" placeholder="Name" />
   </div>
   <div class="form-row">
-    <label for="node-input-tagId"><i class="fa fa-tag"></i> Tag ids</label>
-    <input type="text" id="node-input-tagId" />
+    <label for="node-input-tagFilter"><i class="fa fa-tag"></i> Tag ids</label>
+    <input type="text" id="node-input-tagFilter" />
   </div>
 </script>
 
-<script type="text/html" data-help-name="gsp-get">
-  <p>Get latest tag value from GSP.</p>
+<script type="text/html" data-help-name="gsp-tag-in">
+  <p>Inoked when new tag value is recieved.</p>
 </script>
