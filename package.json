@@ -10,11 +10,13 @@
   "license": "ISC",
   "node-red": {
     "nodes": {
-      "gsp-get": "gsp-get.js"
+      "gsp-get": "gsp-get.js",
+      "gsp-server": "gsp-server.js"
     }
   },
   "dependencies": {
-    "gspwsclient": "git+https://github.com/ondraco/gspwsclient.git"
+    "gspwsclient": "git+https://github.com/ondraco/gspwsclient.git",
+    "ws": "^7.4.2"
   },
   "devDependencies": {
     "mocha": "^8.2.1",
