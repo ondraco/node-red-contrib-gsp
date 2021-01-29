@@ -7,6 +7,7 @@ module.exports = function (RED) {
     this.port = n.port;
     this.apiKey = n.apiKey;
     var node = this;
+    var finished = false;
 
     // THIS NEEDS TO BE REMOVED!!!!
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
@@ -16,18 +17,28 @@ module.exports = function (RED) {
     this.connected = false;
     this.gws.addEventListener("ready", onReady);
     this.gws.addEventListener("close", onClose);
-    this.gws.connect();
+    connect();
 
-    this.on('close', function() {
-        gws.close();
+    this.on("close", function () {
+      node.finished = true;
+      gws.close();
     });
-    
+
+    function connect() {
+      node.gws.connect();
+    }
+
     function onReady(e) {
       node.connected = true;
     }
 
     function onClose(e) {
       node.connected = false;
+
+      // try to reconnect
+      if (!node.finished) {
+        setTimeout(() => connect(), 500);
+      }
     }
   }
 

@@ -20,11 +20,10 @@ module.exports = function (RED) {
       gws.removeEventListener("tagValue", onNewValue);
       gws.removeEventListener("ready", onReady);
       gws.removeEventListener("error", onError);
+      gws.removeEventListener("close", onClose);
     });
 
     node.on("input", function (msg) {
-      node.warn("INPUT " + node.server.connected);
-
       if (!node.server.connected) {
         return;
       }
@@ -47,9 +46,7 @@ module.exports = function (RED) {
       node.status({ fill: "red", shape: "ring", text: "disconnected - error" });
     }
 
-    function onError(e) {
-      node.warn(e);
-    }
+    function onError(e) {}
   }
 
   RED.nodes.registerType("gsp-get", GspGet);
