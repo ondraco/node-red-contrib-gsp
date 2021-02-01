@@ -1,5 +1,5 @@
 module.exports = function (RED) {
-  function GspGet(config) {
+  function GspTagIn(config) {
     RED.nodes.createNode(this, config);
     var node = this;
 
@@ -81,5 +81,5 @@ module.exports = function (RED) {
     }
   }
 
-  RED.nodes.registerType("gsp-tag-in", GspGet);
+  RED.nodes.registerType("gsp-tag-in", GspTagIn);
 };

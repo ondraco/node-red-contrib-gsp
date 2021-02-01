@@ -1,5 +1,5 @@
 module.exports = function (RED) {
-  function GspTagGet(config) {
+  function GspTagSet(config) {
     RED.nodes.createNode(this, config);
 
     this.tagId = config.tagId;
@@ -22,9 +22,28 @@ module.exports = function (RED) {
         return;
       }
 
-      let id = msg.tagId;
-      gws.queryTagValues(id);
+      let values = fixInput(msg);
+      if (values !== null) {
+        gws.setTagValues(values);
+      }
     });
+
+    function fixInput(msg) {
+      let id = msg.tagId;
+      let fixedId = null;
+
+      let value = msg.payload;
+
+      if (typeof id === "number") {
+        fixedId = id;
+      } else if (!isNaN(id)) {
+        fixedId = parseInt(id);
+      } else {
+        node.warn("Invalid or missing tagId value!");
+      }
+
+      return [{ tag: fixedId, val: value }];
+    }
 
     function onReady(e) {
       node.status({ fill: "green", shape: "ring", text: "connected" });
@@ -35,5 +54,5 @@ module.exports = function (RED) {
     }
   }
 
-  RED.nodes.registerType("gsp-tag-get", GspTagGet);
+  RED.nodes.registerType("gsp-tag-set", GspTagSet);
 };
