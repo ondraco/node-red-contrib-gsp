@@ -13,16 +13,18 @@
       "gsp-tag-in": "gsp-tag-in.js",
       "gsp-tag-get": "gsp-tag-get.js",
       "gsp-tag-set": "gsp-tag-set.js",
+      "gsp-tag-sub": "gsp-tag-sub.js",
+      "gsp-tag-unsub": "gsp-tag-unsub.js",
       "gsp-server": "gsp-server.js"
     }
   },
   "dependencies": {
     "gspwsclient": "git+https://github.com/ondraco/gspwsclient.git",
-    "ws": "^7.4.2"
+    "ws": "^7.4.3"
   },
   "devDependencies": {
-    "mocha": "^8.2.1",
-    "node-red": "^1.2.7",
-    "node-red-node-test-helper": "^0.2.5"
+    "mocha": "^8.3.0",
+    "node-red": "^1.2.9",
+    "node-red-node-test-helper": "^0.2.7"
   }
 }

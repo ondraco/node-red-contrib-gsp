@@ -60,7 +60,12 @@ module.exports = function (RED) {
         node.error("GSP reposonse is in wrong format!");
       }
 
-      return e.filter((x) => node.tagFilter.has(x.tag));
+      let filtered = e.filter((x) => node.tagFilter.has(x.tag));
+      if (filtered.length === 0) {
+        return null;
+      }
+
+      return filtered;
     }
 
     function onNewValue(e) {
