@@ -3,10 +3,10 @@ module.exports = function (RED) {
     RED.nodes.createNode(this, config);
 
     this.tagId = config.tagId;
-    this.status({ fill: "red", shape: "ring", text: "disconnected" });
     var node = this;
 
     this.server = RED.nodes.getNode(config.server);
+    this.status(node.server.stateDisconnected);
 
     let gws = this.server.gws;
     gws.addEventListener("ready", onReady);
@@ -26,12 +26,19 @@ module.exports = function (RED) {
       gws.unsubscribe(id);
     });
 
+    function setState(state) {
+      if (node.activeState !== state) {
+        node.activeState = state;
+        node.status(state);
+      }
+    }
+
     function onReady(e) {
-      node.status({ fill: "green", shape: "ring", text: "connected" });
+      setState(node.server.stateConnected);
     }
 
     function onClose(e) {
-      node.status({ fill: "red", shape: "ring", text: "disconnected - error" });
+      setState(node.server.stateDisconnected);
     }
   }
 

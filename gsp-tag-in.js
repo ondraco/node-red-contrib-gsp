@@ -4,8 +4,8 @@ module.exports = function (RED) {
     var node = this;
 
     this.tagFilter = fixFilter(config.tagFilter);
-    this.status({ fill: "red", shape: "ring", text: "disconnected" });
     this.server = RED.nodes.getNode(config.server);
+    this.status(node.server.stateDisconnected);
 
     let gws = this.server.gws;
     gws.addEventListener("tagValue", onNewValue);
@@ -77,12 +77,20 @@ module.exports = function (RED) {
       }
     }
 
-    function onClose(e) {
-      node.status({ fill: "red", shape: "ring", text: "disconnected - error" });
+    function setState(state) {
+  
+      if (node.activeState !== state) {
+        node.activeState = state;
+        node.status(state);
+      }
     }
 
     function onReady(e) {
-      node.status({ fill: "green", shape: "ring", text: "connected" });
+      setState(node.server.stateConnected);
+    }
+
+    function onClose(e) {
+      setState(node.server.stateDisconnected);
     }
   }
 

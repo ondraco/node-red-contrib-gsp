@@ -6,6 +6,8 @@ module.exports = function (RED) {
     this.host = n.host;
     this.port = n.port;
     this.apiKey = n.apiKey;
+    this.stateConnected = { fill: "green", shape: "ring", text: "connected", state: 0 };
+    this.stateDisconnected = { fill: "red", shape: "ring", text: "disconnected - error", state :1 };
     var node = this;
     var finished = false;
 
