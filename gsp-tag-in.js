@@ -24,9 +24,27 @@ module.exports = function (RED) {
         return undefined;
       }
 
-      if (Array.isArray(filter)) {
+      // its a number or a string number
+      if (typeof x === "number") {
         let set = new Set();
-        filter.forEach((x) => {
+        set.add(filter);
+        return set;
+      } else if (!isNaN(filter)) {
+        let set = new Set();
+        set.add(parseInt(filter));
+        return set;
+      }
+
+      let arrayObject;
+      try {
+        arrayObject = JSON.parse(filter);
+      } catch (e) {
+        arrayObject = null;
+      }
+
+      if (Array.isArray(arrayObject)) {
+        let set = new Set();
+        arrayObject.forEach((x) => {
           if (typeof x === "number") {
             set.add(x);
           } else if (!isNaN(x)) {
@@ -34,17 +52,10 @@ module.exports = function (RED) {
           }
         });
         return set;
-      } else if (typeof x === "number") {
-        let set = new Set();
-        set.add(filter);
-      } else if (!isNaN(filter)) {
-        let set = new Set();
-        set.add(parseInt(filter));
-        return set;
-      } else {
-        node.error("Invalid filter format!");
-        return null;
       }
+
+      node.error("Invalid filter format!");
+      return null;
     }
 
     function filterTags(e) {
@@ -78,7 +89,6 @@ module.exports = function (RED) {
     }
 
     function setState(state) {
-  
       if (node.activeState !== state) {
         node.activeState = state;
         node.status(state);
