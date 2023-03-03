@@ -6,6 +6,7 @@ module.exports = function (RED) {
     this.host = n.host;
     this.port = n.port;
     this.apiKey = n.apiKey;
+    this.profile = n.profile;
     this.stateConnected = { fill: "green", shape: "ring", text: "connected", state: 0 };
     this.stateDisconnected = { fill: "red", shape: "ring", text: "disconnected - error", state :1 };
     var node = this;
@@ -15,7 +16,7 @@ module.exports = function (RED) {
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
     // ---------------------------
 
-    this.gws = new GSPClient.WS(this.host, this.apiKey);
+    this.gws = new GSPClient.WS(this.host, this.profile, this.apiKey);
     this.connected = false;
     this.gws.addEventListener("ready", onReady);
     this.gws.addEventListener("close", onClose);
